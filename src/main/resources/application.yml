@@ -1,0 +1,21 @@
+
+server:
+  port: 8889
+
+spring:
+  datasource:
+    username: root
+    password: ab5051
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/filecoincloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=CTT
+
+mybatis-plus:
+
+
+  # xml\u5730\u5740
+  mapper-locations: classpath:mapper/*Mapper.xml
+  # \u5B9E\u4F53\u626B\u63CF\uFF0C\u591A\u4E2Apackage\u7528\u9017\u53F7\u6216\u8005\u5206\u53F7\u5206\u9694
+  type-aliases-package: com.songbo.dicshop.entity   #\u81EA\u5DF1\u7684\u5B9E\u4F53\u7C7B\u5730\u5740
+    #configuration:
+    # \u8FD9\u4E2A\u914D\u7F6E\u4F1A\u5C06\u6267\u884C\u7684sql\u6253\u5370\u51FA\u6765\uFF0C\u5728\u5F00\u53D1\u6216\u6D4B\u8BD5\u7684\u65F6\u5019\u53EF\u4EE5\u7528
+  #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
