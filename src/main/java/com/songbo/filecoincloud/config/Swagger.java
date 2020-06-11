@@ -41,7 +41,8 @@ public class Swagger {
                 // 设置联系人
                 .contact(new Contact("songbo", "http://www.imsongbo.com", "1127568060@qq.com"))
                 // 描述
-                .description("file coin")
+                .description("file coin 后台管理所有的请求头都需要添加ACCESS_TOKEN和userId"
+                       )
                 // 定义版本号
                 .version("1.0").build();
     }

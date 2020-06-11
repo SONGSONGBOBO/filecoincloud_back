@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,15 +33,17 @@ public class UploadController {
     public ResultUtil insertImgs(MultipartRequest file){
         try {
             List<MultipartFile> files = file.getFiles("file");
+            List<String> fileRes = new ArrayList<>();
             for (MultipartFile f : files) {
                 try {
-                    FileUtil.upload(f, CommonUtil.IMGS_URL);
+                    String upload = FileUtil.upload(f, CommonUtil.IMGS_URL);
+                    fileRes.add(upload);
                 } catch (IOException e) {
                     return ResultUtil.result500(e.getMessage(), f.getOriginalFilename());
                 }
             }
 
-            return ResultUtil.result200("success", null);
+            return ResultUtil.result200("success", fileRes);
         } catch (Exception e) {
             return ResultUtil.result500("fail",e.getMessage());
         }

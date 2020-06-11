@@ -1,5 +1,7 @@
 package com.songbo.filecoincloud.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,7 +22,7 @@ import java.io.Serializable;
 public class FccOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId(value = "fcc_order_id")
     private String fccOrderId;
 
     private Integer fccOrderGoodsId;

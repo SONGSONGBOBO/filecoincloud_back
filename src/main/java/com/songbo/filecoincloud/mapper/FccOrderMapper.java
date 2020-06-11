@@ -16,5 +16,13 @@ import java.util.List;
 public interface FccOrderMapper extends BaseMapper<FccOrder> {
 
     //查询
-    List<FccOrder> getByStatus(int status);
+    List<FccOrder> getByFromTo(int from, int to);
+
+    List<FccOrder> getByUserAndStatus(int userId, int status);
+
+    List<FccOrder> getByUser(int userId);
+
+    List<FccOrder> getByUserToDo(int userId);
+    List<FccOrder> getByUserFailed(int userId);
+
 }

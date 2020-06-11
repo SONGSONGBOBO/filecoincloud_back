@@ -22,7 +22,7 @@ public class FileUtil {
          *
          * @return
          */
-        public static void upload(MultipartFile file, String path) throws IOException {
+        public static String upload(MultipartFile file, String path) throws IOException {
 
             String name = UUID.randomUUID().toString().replaceAll("-","")  + file.getOriginalFilename();
             // 生成新的文件名
@@ -41,6 +41,7 @@ public class FileUtil {
             try {
                 //保存文件
                 file.transferTo(dest);
+                return realPath;
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new IOException("IO写入失败" +name ,e);

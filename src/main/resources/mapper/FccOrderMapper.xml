@@ -2,7 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.songbo.filecoincloud.mapper.FccOrderMapper">
 
-    <select id="getByStatus" resultType="com.songbo.filecoincloud.entity.FccOrder">
-        select * from fcc_order where fcc_order_status = #{status}
+
+    <select id="getByUserAndStatus" resultType="com.songbo.filecoincloud.entity.FccOrder">
+         select * from fcc_order where fcc_order_user_id = #{param1} and fcc_order_status = #{status}
+    </select>
+    <select id="getByUser" resultType="com.songbo.filecoincloud.entity.FccOrder">
+         select * from fcc_order where fcc_order_user_id order by fcc_order_create_time desc
+    </select>
+    <select id="getByUserToDo" resultType="com.songbo.filecoincloud.entity.FccOrder">
+       select * from fcc_order where fcc_order_user_id = #{param1} and fcc_order_status &lt; 100 and fcc_order_status &gt;= 0
+    </select>
+    <select id="getByUserFailed" resultType="com.songbo.filecoincloud.entity.FccOrder">
+        select * from fcc_order where fcc_order_user_id = #{param1} and fcc_order_status &lt; 0
+    </select>
+    <select id="getByFromTo" resultType="com.songbo.filecoincloud.entity.FccOrder">
+        select * from fcc_order where fcc_order_status &lt; #{param2} and fcc_order_status &gt; #{param1}
     </select>
 </mapper>

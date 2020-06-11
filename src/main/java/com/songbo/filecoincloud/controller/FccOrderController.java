@@ -51,8 +51,13 @@ public class FccOrderController {
     private FccUserMapper userMapper;
 
 
-    @GetMapping("/makeOrder")
-    @ApiOperation(value = "创建订单,一种商品")
+    @PostMapping("/makeOrder")
+    @ApiOperation(value = "创建订单,一种商品,返回:" +
+            "    金额 amount;\n" +
+            "    地址 address;\n" +
+            "    id transactionId;\n" +
+            "      已确认 confirmsNeeded;\n" +
+            "    过期时长(秒) timeout;")
     public ResultUtil makeOrder(@RequestParam @ApiParam("商品id") int goodsId,
                                 @RequestParam @ApiParam("商品数量") int num,
                                 @RequestHeader("userId") @ApiParam("请求头中userId") int userId) {
@@ -66,9 +71,53 @@ public class FccOrderController {
                     CommonUtil.COINPAYMENTS_ADDRESS, user.getFccUserName()));
 
             orderService.save(new FccOrder(transaction.getTransactionId(), goodsId, userId, transaction.getAmount(), 1, now, now));
-            return ResultUtil.result200("创建订单成功", goods);
+            return ResultUtil.result200("创建订单成功", transaction);
         } catch (Exception e) {
             return ResultUtil.result500("创建订单失败", e.getMessage());
+        }
+    }
+    @GetMapping("/getOrdersByUser")
+    @ApiOperation(value = "查询用户订单列表")
+    public ResultUtil getOrdersByUser(
+                                @RequestHeader("userId") @ApiParam("请求头中userId") int userId) {
+        try {
+            List<FccOrder> orders = orderMapper.getByUser(userId);
+            return ResultUtil.result200("查询用户订单列表成功", orders);
+        } catch (Exception e) {
+            return ResultUtil.result500("查询用户订单列表失败", e.getMessage());
+        }
+    }
+    @GetMapping("/getOrdersByUserCompleted")
+    @ApiOperation(value = "查询用户已完成订单列表")
+    public ResultUtil getOrdersByUserCompleted(
+            @RequestHeader("userId") @ApiParam("请求头中userId") int userId) {
+        try {
+            List<FccOrder> orders = orderMapper.getByUserAndStatus(userId, 100);
+            return ResultUtil.result200("查询用户已完成订单列表成功", orders);
+        } catch (Exception e) {
+            return ResultUtil.result500("查询用户已完成订单列表失败", e.getMessage());
+        }
+    }
+    @GetMapping("/getOrdersByUserToDo")
+    @ApiOperation(value = "查询用户正在进行的订单列表")
+    public ResultUtil getOrdersByUserToDo(
+            @RequestHeader("userId") @ApiParam("请求头中userId") int userId) {
+        try {
+            List<FccOrder> orders = orderMapper.getByUserToDo(userId);
+            return ResultUtil.result200("查询用户正在进行的订单列表成功", orders);
+        } catch (Exception e) {
+            return ResultUtil.result500("查询用户正在进行的订单列表失败", e.getMessage());
+        }
+    }
+    @GetMapping("/getOrdersByUserFail")
+    @ApiOperation(value = "查询用户已过期的订单列表")
+    public ResultUtil getOrdersByUserFail(
+            @RequestHeader("userId") @ApiParam("请求头中userId") int userId) {
+        try {
+            List<FccOrder> orders = orderMapper.getByUserFailed(userId);
+            return ResultUtil.result200("查询用户正在进行的订单列表成功", orders);
+        } catch (Exception e) {
+            return ResultUtil.result500("查询用户正在进行的订单列表失败", e.getMessage());
         }
     }
 }

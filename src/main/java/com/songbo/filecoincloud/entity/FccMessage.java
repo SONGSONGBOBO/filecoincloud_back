@@ -38,7 +38,7 @@ public class FccMessage implements Serializable {
     private String fccMessageImgs;
     @ApiModelProperty("时间")
     private Long fccMessageTime;
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty("新闻种类，1为中文，2为英文")
     private Integer fccMessageStatus;
 
     public FccMessage() {

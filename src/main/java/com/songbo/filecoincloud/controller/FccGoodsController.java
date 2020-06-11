@@ -6,10 +6,8 @@ import com.songbo.filecoincloud.mapper.FccGoodsMapper;
 import com.songbo.filecoincloud.utils.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.ApiParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,6 +34,17 @@ public class FccGoodsController {
     public ResultUtil getGoodsList() {
         try {
             List<FccGoods> goods = goodsMapper.selectList(null);
+            return ResultUtil.result200("获取成功", goods);
+        } catch (Exception e) {
+            return ResultUtil.result500("获取失败", e.getMessage());
+        }
+    }
+
+    @PostMapping("/getGoodsById")
+    @ApiOperation(value = "获取商品详情")
+    public ResultUtil getGoodsById(@RequestParam("id") @ApiParam("商品id") int id) {
+        try {
+            FccGoods goods = goodsMapper.selectById(id);
             return ResultUtil.result200("获取成功", goods);
         } catch (Exception e) {
             return ResultUtil.result500("获取失败", e.getMessage());

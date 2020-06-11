@@ -35,7 +35,7 @@ public class FccOrderServiceImpl extends ServiceImpl<FccOrderMapper, FccOrder> i
     private CoinpaymentsService coinpaymentsService;
     @Override
     public void refreshOrders() {
-        List<FccOrder> orders = orderMapper.getByStatus(1);
+        List<FccOrder> orders = orderMapper.getByFromTo(-1, 100);
         long now = TimeUtil.getInstance().getNowLong().get();
         log.warn("refreshOrders start: "+ now);
         for (FccOrder order : orders) {

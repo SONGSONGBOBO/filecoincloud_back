@@ -16,6 +16,6 @@ import java.util.List;
 public interface FccMessageMapper extends BaseMapper<FccMessage> {
 
     //内容较少不必分页
-    List<FccMessage> getByTimeDesc();
+    List<FccMessage> getByTimeDescAndStatus(int status);
 
 }
